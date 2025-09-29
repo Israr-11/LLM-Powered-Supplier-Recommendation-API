@@ -48,17 +48,16 @@ class LLMService:
             else:
                 raise ValueError(f"Unsupported LLM provider: {self.provider}")
             
-            # Parse and validate the response
+            # PARSE AND VALIDATE THE RESPONSE
             try:
                 response_dict = json.loads(response)
                 validated_response = SupplierResponseSchema(**response_dict)
                 return validated_response
             except json.JSONDecodeError:
-                # Handle case where LLM didn't return valid JSON
+                # HANDLE CASE WHERE LLM DIDN'T RETURN VALID JSON
                 print(f"LLM didn't return valid JSON: {response}")
                 return None
             except Exception as e:
-                # Handle validation errors
                 print(f"Validation error: {e}")
                 return None
                 

@@ -38,7 +38,7 @@ class QueryService:
                     "recommendation": recommendation.model_dump()
                 }
             else:
-                # Save the query even if recommendation failed
+                # SAVE THE QUERY EVEN IF RECOMMENDATION FAILED
                 db.session.commit()
                 return {
                     "success": False,

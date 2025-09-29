@@ -1,12 +1,11 @@
 from datetime import datetime, timezone
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from models.user_model import db
 
 class Query(db.Model):
     __tablename__ = 'queries'
     
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     query_text = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
