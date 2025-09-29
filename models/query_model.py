@@ -9,7 +9,7 @@ class Query(db.Model):
     query_text = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
-    # RELATIONSHIP WITH RESPONSES
+    # Relationship with responses
     response = db.relationship('SupplierResponse', backref='query', lazy=True, uselist=False)
     
     def __repr__(self):

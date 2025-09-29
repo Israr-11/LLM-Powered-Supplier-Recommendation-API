@@ -5,10 +5,10 @@ class UserController:
     def __init__(self):
         self.user_service = UserService()
     
-    def add_user(self, name):
+    def add_user(self, email, name):
         """
         Controller method to add a user
         """
-        print(f'Adding user: {name}')
-        user = self.user_service.add_user(name)
-        return jsonify({"message": f"User {name} added."})
+        user = self.user_service.add_user(email, name)
+        return jsonify({"message": f"User {user} added."})
+    

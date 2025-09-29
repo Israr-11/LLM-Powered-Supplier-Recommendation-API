@@ -4,17 +4,12 @@ class UserService:
     def __init__(self):
         pass
         
-    def add_user(self, username):
+    def add_user(self, email, name):
         """
         Add a new user to the database
         """
-        user = User(username=username)
+        user = User(email=email, name=name)
         db.session.add(user)
         db.session.commit()
         return user
     
-    def get_user_by_name(self, username):
-        """
-        Get a user by username
-        """
-        return User.query.filter_by(username=username).first()
