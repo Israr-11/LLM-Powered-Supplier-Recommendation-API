@@ -1,8 +1,8 @@
 from typing import List, Dict, Optional
-from models.user_model import db
 from models.query_model import Query, SupplierResponse
 from services.llm_service import LLMService
 from utils.schema_validation import SupplierResponseSchema
+from models.query_model import db
 
 class QueryService:
     def __init__(self):
@@ -11,16 +11,16 @@ class QueryService:
     async def process_query(self, user_id: int, query_text: str) -> Dict:
         """Process a user query and return supplier recommendations."""
         try:
-            # Create and save query record
+            # CREATE AND SAVE QUERY RECORD
             query = Query(user_id=user_id, query_text=query_text)
             db.session.add(query)
-            db.session.flush()  # Get the query ID without committing
+            db.session.flush()  # GET THE QUERY ID WITHOUT COMMITTING
             
-            # Get recommendation from LLM
+            # GET RECOMMENDATION FROM LLM
             recommendation = await self.llm_service.get_supplier_recommendation(query_text)
             
             if recommendation:
-                # Create response record
+                # CREATE RESPONSE RECORD
                 response = SupplierResponse(
                     query_id=query.id,
                     supplier_name=recommendation.supplier_name,
