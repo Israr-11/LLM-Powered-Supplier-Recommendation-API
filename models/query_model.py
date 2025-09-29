@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from models.user_model import db
 
 class Query(db.Model):
@@ -7,9 +7,9 @@ class Query(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     query_text = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
-    # Relationship with responses
+    # RELATIONSHIP WITH RESPONSES
     response = db.relationship('SupplierResponse', backref='query', lazy=True, uselist=False)
     
     def __repr__(self):

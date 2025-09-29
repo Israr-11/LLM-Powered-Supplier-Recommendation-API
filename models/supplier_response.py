@@ -1,5 +1,5 @@
 
-from datetime import datetime
+from datetime import datetime, timezone
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -13,8 +13,8 @@ class SupplierResponse(db.Model):
     rating = db.Column(db.Float)
     delivery_time_days = db.Column(db.Integer)
     price_estimate = db.Column(db.Float)
-    raw_response = db.Column(db.Text)  # Store the complete LLM response
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    raw_response = db.Column(db.Text)  # STORE THE COMPLETE LLM RESPONSE
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     
     def __repr__(self):
         return f'<SupplierResponse {self.id}: {self.supplier_name}>'
