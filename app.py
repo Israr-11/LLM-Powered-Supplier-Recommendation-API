@@ -8,10 +8,10 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
     
-    # Initialize extensions
+    # INITIALIZING EXTENSIONS
     db.init_app(app)
     
-    # Register blueprints
+    # REGISTERING BLUEPRINTS
     app.register_blueprint(user_bp)
     app.register_blueprint(query_bp)
     
@@ -24,7 +24,7 @@ def create_app(config_class=Config):
 if __name__ == '__main__':
     app = create_app()
     
-    # Uncomment to create tables on startup
+    # UNCOMMENT TO CREATE TABLES ON STARTUP
     # with app.app_context():
     #     db.create_all()
     

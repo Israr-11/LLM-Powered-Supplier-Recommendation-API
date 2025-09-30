@@ -11,7 +11,7 @@ class QueryController:
         if not data or 'query' not in data:
             return jsonify({"error": "Missing query parameter"}), 400
         
-        # For simplicity, using user_id=1; in a real app, get from auth
+        # FOR SIMPLICITY, USING USER_ID=1; IN A REAL APP, GET FROM AUTH
         user_id = 1
         query_text = data['query']
         
@@ -24,7 +24,7 @@ class QueryController:
     
     def get_history(self):
         """Handle request to get query history."""
-        # For simplicity, using user_id=1; in a real app, get from auth
+        # FOR SIMPLICITY, USING USER_ID=1; IN A REAL APP, GET FROM AUTH
         user_id = 1
         
         history = self.query_service.get_query_history(user_id)

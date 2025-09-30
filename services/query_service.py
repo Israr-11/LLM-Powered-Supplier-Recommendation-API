@@ -12,16 +12,16 @@ class QueryService:
     def process_query(self, user_id: int, query_text: str) -> Dict:
         """Process a user query and return supplier recommendations."""
         try:
-            # Create and save query record
+            # CREATING AND SAVING QUERY RECORD
             query = Query(user_id=user_id, query_text=query_text)
             db.session.add(query)
-            db.session.flush()  # Get the query ID without committing
+            db.session.flush()  # GETTING THE QUERY ID WITHOUT COMMITTING
             
-            # Get recommendation from LLM
+            # GETTING RECOMMENDATION FROM LLM
             recommendation = self.llm_service.get_supplier_recommendation(query_text)
             
             if recommendation:
-                # Create response record
+                # CREATING RESPONSE RECORD
                 response = SupplierResponse(
                     query_id=query.id,
                     supplier_name=recommendation.supplier_name,
@@ -39,7 +39,7 @@ class QueryService:
                     "recommendation": recommendation.model_dump()
                 }
             else:
-                # Save the query even if recommendation failed
+                # SAVING THE QUERY EVEN IF RECOMMENDATION FAILED
                 db.session.commit()
                 return {
                     "success": False,

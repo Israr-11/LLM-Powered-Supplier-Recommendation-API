@@ -1,7 +1,7 @@
 import json
 import requests
 from typing import Dict, Any, Optional
-from openai import OpenAI  # Updated import for newer OpenAI version
+from openai import OpenAI  
 from configuration.config import Config
 from utils.schema_validation import SupplierResponseSchema
 
@@ -11,7 +11,6 @@ class LLMService:
         self.provider = self.config.LLM_PROVIDER
         
         if self.provider == 'openai':
-            # Fix: Remove any unexpected parameters
             self.client = OpenAI(api_key=self.config.OPENAI_API_KEY)
         elif self.provider == 'huggingface':
             self.hf_api_key = self.config.HUGGINGFACE_API_KEY
@@ -48,17 +47,16 @@ class LLMService:
             else:
                 raise ValueError(f"Unsupported LLM provider: {self.provider}")
             
-            # Parse and validate the response
+            # PARSING AND VALIDATING THE RESPONSE
             try:
                 response_dict = json.loads(response)
                 validated_response = SupplierResponseSchema(**response_dict)
                 return validated_response
             except json.JSONDecodeError:
-                # Handle case where LLM didn't return valid JSON
+                # HANDLE CASE WHERE LLM DIDN'T RETURN VALID JSON
                 print(f"LLM didn't return valid JSON: {response}")
                 return None
             except Exception as e:
-                # Handle validation errors
                 print(f"Validation error: {e}")
                 return None
                 
@@ -68,7 +66,6 @@ class LLMService:
     
     def _call_openai(self, prompt: str) -> str:
         """Call OpenAI API with the given prompt."""
-        # Updated for OpenAI v1.0+ API
         response = self.client.chat.completions.create(
             model=self.config.OPENAI_MODEL,
             messages=[
@@ -94,6 +91,5 @@ class LLMService:
             if isinstance(result, list) and len(result) > 0:
                 return result[0]["generated_text"]
         
-        # Handle errors
         response.raise_for_status()
         return ""
