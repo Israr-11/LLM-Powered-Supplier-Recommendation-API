@@ -5,7 +5,7 @@ class QueryController:
     def __init__(self):
         self.query_service = QueryService()
     
-    async def process_query(self):
+    def process_query(self):
         """Handle query processing request."""
         data = request.get_json()
         if not data or 'query' not in data:
@@ -15,7 +15,7 @@ class QueryController:
         user_id = 1
         query_text = data['query']
         
-        result = await self.query_service.process_query(user_id, query_text)
+        result = self.query_service.process_query(user_id, query_text)
         
         if result.get("success", False):
             return jsonify(result), 200

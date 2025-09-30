@@ -1,26 +1,27 @@
 from typing import List, Dict, Optional
-from models.query_model import Query, SupplierResponse
+from models.user_model import db
+from models.query_model import Query
+from models.supplier_response_model import SupplierResponse  # Make sure this import is correct
 from services.llm_service import LLMService
 from utils.schema_validation import SupplierResponseSchema
-from models.query_model import db
 
 class QueryService:
     def __init__(self):
         self.llm_service = LLMService()
     
-    async def process_query(self, user_id: int, query_text: str) -> Dict:
+    def process_query(self, user_id: int, query_text: str) -> Dict:
         """Process a user query and return supplier recommendations."""
         try:
-            # CREATE AND SAVE QUERY RECORD
+            # Create and save query record
             query = Query(user_id=user_id, query_text=query_text)
             db.session.add(query)
-            db.session.flush()  # GET THE QUERY ID WITHOUT COMMITTING
+            db.session.flush()  # Get the query ID without committing
             
-            # GET RECOMMENDATION FROM LLM
-            recommendation = await self.llm_service.get_supplier_recommendation(query_text)
+            # Get recommendation from LLM
+            recommendation = self.llm_service.get_supplier_recommendation(query_text)
             
             if recommendation:
-                # CREATE RESPONSE RECORD
+                # Create response record
                 response = SupplierResponse(
                     query_id=query.id,
                     supplier_name=recommendation.supplier_name,
@@ -38,7 +39,7 @@ class QueryService:
                     "recommendation": recommendation.model_dump()
                 }
             else:
-                # SAVE THE QUERY EVEN IF RECOMMENDATION FAILED
+                # Save the query even if recommendation failed
                 db.session.commit()
                 return {
                     "success": False,

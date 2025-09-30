@@ -9,7 +9,7 @@ class Config:
     DB_PASSWORD = os.getenv('DB_PASSWORD', 'postgres')
     DB_HOST = os.getenv('DB_HOST', 'localhost')
     DB_PORT = os.getenv('DB_PORT', '5433')
-    DB_NAME = os.getenv('DB_NAME', 'flask_db')
+    DB_NAME = os.getenv('DB_NAME', 'llm_supplier_recommendation')
     
     # CONSTRUCT THE DATABASE URI FROM INDIVIDUAL PARAMETERS
     SQLALCHEMY_DATABASE_URI = os.getenv(

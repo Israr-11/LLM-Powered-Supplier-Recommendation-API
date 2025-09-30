@@ -1,8 +1,7 @@
 
 from datetime import datetime, timezone
 from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from models.user_model import db
 
 class SupplierResponse(db.Model):
     __tablename__ = 'supplier_responses'

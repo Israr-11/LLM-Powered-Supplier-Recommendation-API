@@ -5,9 +5,9 @@ query_bp = Blueprint('query', __name__, url_prefix='/api')
 controller = QueryController()
 
 @query_bp.route('/query', methods=['POST'])
-async def process_query():
+def process_query():
     """Endpoint to process a query."""
-    return await controller.process_query()
+    return controller.process_query()
 
 @query_bp.route('/history', methods=['GET'])
 def get_history():

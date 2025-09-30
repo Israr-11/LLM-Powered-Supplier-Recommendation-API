@@ -23,6 +23,7 @@ def create_app(config_class=Config):
 
 if __name__ == '__main__':
     app = create_app()
+    
     # Uncomment to create tables on startup
     # with app.app_context():
     #     db.create_all()
