@@ -83,10 +83,12 @@ class LLMService:
         """Call Hugging Face API with the given prompt."""
         API_URL = f"https://api-inference.huggingface.co/models/{self.hf_model}"
         headers = {"Authorization": f"Bearer {self.hf_api_key}"}
-        
+        print(f"Calling Hugging Face API: {API_URL}")
+
         payload = {"inputs": prompt, "parameters": {"return_full_text": False}}
         response = requests.post(API_URL, headers=headers, json=payload)
-        
+        print(f"Response status: {response.status_code}")
+     
         if response.status_code == 200:
             result = response.json()
             if isinstance(result, list) and len(result) > 0:
