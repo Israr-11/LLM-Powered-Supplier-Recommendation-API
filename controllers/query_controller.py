@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from services.query_service import QueryService
 
+
 class QueryController:
     def __init__(self):
         self.query_service = QueryService()
